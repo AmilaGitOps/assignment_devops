@@ -8,6 +8,10 @@ on:
 permissions:
   contents: read
 
+env:
+  IMAGE_NAME: property-service-api
+  IMAGE_TAG: v1
+
 jobs:
   terraform:
     name: Terraform checks
@@ -62,12 +66,12 @@ jobs:
 
       - name: Build Docker image
         working-directory: property-service-api
-        run: docker build -t property-service-api:test .
+        run: docker build -t "${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}" .
 
       - name: Trivy image scan
         uses: aquasecurity/trivy-action@master
         with:
-          image-ref: property-service-api:test
+          image-ref: "${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}"
           format: table
           exit-code: "1"
           ignore-unfixed: true
