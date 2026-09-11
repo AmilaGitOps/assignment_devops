@@ -100,10 +100,7 @@ terraform destroy
 
 Then remove the remote-state bootstrap only after the dev state is no longer needed.
 
-## Interview explanation
-
-A strong explanation is: "I converted the supplied stack with near one-to-one resource mapping, but I did not preserve obsolete or unsafe behavior blindly. I migrated Aurora Serverless v1 to v2, removed a hard-coded DB password, tightened ALB-to-ECS ingress, fixed the NACL/NAT contradiction, and added ECR/Container Insights because the supplied templates referenced an image repository and the assignment requires production-minded operability."
 
 ## CI/CD Pipeline
 
-## CI/CD Pipeline
+
