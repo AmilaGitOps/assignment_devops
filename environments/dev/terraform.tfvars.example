@@ -1,0 +1,28 @@
+# Values closely follow the supplied CloudFormation defaults.
+aws_region            = "eu-west-1"
+environment_name      = "dev"
+
+# REQUIRED: the source CloudFormation template attaches to an existing VPC.
+vpc_cidr              = "172.31.0.0/16"
+public_subnet_1_cidr  = "172.31.0.0/22"
+public_subnet_2_cidr  = "172.31.4.0/22"
+private_subnet_1_cidr = "172.31.16.0/20"
+private_subnet_2_cidr = "172.31.32.0/20"
+
+app_stack_name = "property-service-api"
+service_name   = "property-service-api"
+image_tag      = "latest"
+container_port = 80
+desired_count  = 1
+
+db_user     = "admin"
+db_name     = "IdentityDB"
+
+# DO NOT commit a real password. Set it through TF_VAR_db_password or a local
+# terraform.tfvars file excluded from Git.
+db_password = "CHANGE_ME_STRONG_PASSWORD"
+
+# Modern replacement for CFN's retired Aurora Serverless v1 / MySQL 5.6.
+aurora_engine_version = "8.0.mysql_aurora.3.08.2"
+serverless_min_acu     = 0.5
+serverless_max_acu     = 4
