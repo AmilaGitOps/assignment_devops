@@ -1,27 +1,3 @@
-# Terraform conversion - AWS Dev environment
-
-This package converts the supplied CloudFormation templates into a Terraform module structure for the **dev** environment.
-
-## Source-to-Terraform mapping
-
-| CloudFormation source | Terraform module |
-|---|---|
-| `vpc/vpc.yaml` | `modules/vpc` |
-| `ALB/alb.yaml` | `modules/alb` |
-| `task-definition.yaml` | `modules/ecs_task` |
-| `ECS/ecs.yaml` | `modules/ecs_service` |
-| `RDS/rds.yaml` | `modules/rds` |
-
-The original VPC template **does not create a VPC**; it takes `VpcId` as an input and attaches an Internet Gateway, subnets, NAT gateways, routes, NACLs and SGs to that existing VPC. This Terraform conversion preserves that behavior.
-
-## Intentional changes from the legacy CloudFormation
-
-1. **Aurora Serverless v1 -> Aurora Serverless v2.** The source used `engine_mode: serverless`, Aurora MySQL 5.6 and v1 ACU scaling. AWS ended Aurora Serverless v1. The Terraform module uses Aurora MySQL Serverless v2 with a `db.serverless` cluster instance, encryption at rest, and v2 scaling.
-2. **DB password is no longer hard-coded.** The source contained a plaintext default. Terraform requires the password as a sensitive variable. Prefer `TF_VAR_db_password` or another secret-injection mechanism.
-3. **Private NACL corrected for NAT/ECR access.** The source only allowed private-subnet egress to the VPC CIDR, which conflicts with its own NAT default routes and can prevent ECS from pulling images/reaching required endpoints. The Terraform version allows outbound traffic and ephemeral return traffic. For a stricter production design, use VPC endpoints and tighter egress rules.
-4. **ALB -> ECS ingress reduced to the actual container port.** The source allowed ports `1-65535`; Terraform allows only the configured application port.
-5. **ECR repository is created.** The source task definition referenced an ECR repository but no ECR resource was included in the provided package. The Terraform task module creates the repository so the dev environment is self-contained.
-6. **ECS Container Insights enabled.** Added as an observability best practice for the take-home assignment.
 
 ## Prerequisites
 
