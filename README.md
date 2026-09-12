@@ -102,5 +102,8 @@ Then remove the remote-state bootstrap only after the dev state is no longer nee
 
 
 ## CI/CD Pipeline
+CI workflow pipeline
+<img width="1045" height="741" alt="image" src="https://github.com/user-attachments/assets/6643c4ef-9fa0-49e6-83fc-3f0d61aa9f8b" />
+
 
 
